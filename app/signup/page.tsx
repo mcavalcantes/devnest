@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/hooks/use-toast";
 
 interface Inputs {
+  name: string;
   username: string;
   password: string;
 }
@@ -19,20 +20,39 @@ export default function Login() {
   const { toast } = useToast();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
+    // VALIDATE/AUTHENTICATE SHIT HERE BEFORE REDIRECTING
+
     toast({
       title: "Sucesso!",
       description: "Você será redirecionado para a página de login.",
     });
 
     console.log(data);
-    // DO SOME SHIT HERE
   };
 
   return (
     <>
       <main className="min-h-screen flex flex-col px-8 md:px-48 xl:px-96">
-        <h1 className="h-20 flex items-center text-2xl font-bold">Login</h1>
+        <h1 className="h-20 flex items-center text-2xl font-bold">Cadastrar</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
+          <div className="flex flex-col">
+            <label htmlFor="name" className="font-bold text-lg">Nome</label>
+            {
+              errors.name?.type === "required" ?
+              <span className="text-red-500">Preencha seu nome.</span> :
+
+              errors.name?.type === "maxLength" ?
+              <span className="text-red-500">Seu nome deve ter no máximo 128 caracteres.</span> :
+
+              null
+            }
+            <input
+              type="text"
+              {...register("name", { maxLength: 128, required: true })}
+              placeholder="Nome"
+              className={`w-64 md:w-80 p-2 border transition outline-none rounded focus:ring-1 ${errors.name ? "border-red-500 focus:ring-red-500" : "border-zinc-300 focus:border-zinc-400 focus:ring-zinc-400"}`}
+            />
+          </div>
           <div className="flex flex-col">
             <label htmlFor="username" className="font-bold text-lg">Nome de usuário</label>
             {
@@ -50,6 +70,7 @@ export default function Login() {
             <input
               type="text"
               {...register("username", { minLength: 4, maxLength: 128, required: true })}
+              placeholder="Nome de usuário"
               className={`w-64 md:w-80 p-2 border transition outline-none rounded focus:ring-1 ${errors.username ? "border-red-500 focus:ring-red-500" : "border-zinc-300 focus:border-zinc-400 focus:ring-zinc-400"}`}
             />
           </div>
@@ -70,6 +91,7 @@ export default function Login() {
             <input
               type="password"
               {...register("password", { minLength: 8, maxLength: 128, required: true })}
+              placeholder="Senha"
               className={`w-64 md:w-80 p-2 border transition outline-none rounded focus:ring-1 ${errors.password ? "border-red-500 focus:ring-red-500" : "border-zinc-300 focus:border-zinc-400 focus:ring-zinc-400"}`}
             />
           </div>

@@ -26,6 +26,7 @@ export default function Login() {
           <input
             type="text"
             {...register("username", { maxLength: 128, required: true })}
+            placeholder="Nome de usuário"
             className={`w-64 md:w-80 p-2 border transition outline-none rounded focus:ring-1 ${errors.username ? "border-red-500 focus:ring-red-500" : "border-zinc-300 focus:border-zinc-400 focus:ring-zinc-400"}`}
           />
         </div>
@@ -35,6 +36,7 @@ export default function Login() {
           <input
             type="password"
             {...register("password", { maxLength: 128, required: true })}
+            placeholder="Senha"
             className={`w-64 md:w-80 p-2 border transition outline-none rounded focus:ring-1 ${errors.password ? "border-red-500 focus:ring-red-500" : "border-zinc-300 focus:border-zinc-400 focus:ring-zinc-400"}`}
           />
         </div>
